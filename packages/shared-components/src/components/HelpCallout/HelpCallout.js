@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Manager, Reference, Popper } from 'react-popper';
 import P from 'components/P';
-import Anchor from 'components/Anchor';
 import HelpIcon from './styles/HelpIcon';
 import Container from './styles/HelpCalloutContainer';
 
@@ -51,39 +50,21 @@ class HelpCallout extends React.Component {
     this.setState({ showCallout: false });
   };
 
-  renderTextAsTriggerElement = (ref) => (
-    /* TODO: move to the Link when it will be in the master */
-    <Anchor
-      type="text"
+  renderReferenceContent = ({ ref }) => (
+    <div
+      style={{ display: 'inline-block' }}
+      ref={ref}
       onMouseOver={this.onMouseOver}
       onMouseLeave={this.onMouseLeave}
     >
-      {this.props.children}
-      <HelpIcon
-        name="help"
-        innerRef={ref}
-      />
-    </Anchor>
+      { this.props.children }
+      {
+        !this.props.withoutIcon && (
+          <HelpIcon name="help" />
+        )
+      }
+    </div>
   );
-
-  renderIconAsTriggerElement = (ref) => (
-    <React.Fragment>
-      {this.props.children}
-      <HelpIcon
-        name="help"
-        innerRef={ref}
-        onMouseOver={this.onMouseOver}
-        onMouseLeave={this.onMouseLeave}
-      />
-    </React.Fragment>
-  );
-
-  renderReferenceContent = ({ ref }) => {
-    const renderContent = this.props.hintText
-      ? this.renderTextAsTriggerElement
-      : this.renderIconAsTriggerElement;
-    return renderContent(ref);
-  };
 
   renderPopperContent = ({ ref, style, placement }) => (
     <Container
@@ -102,7 +83,7 @@ class HelpCallout extends React.Component {
       : this.props.boundary;
 
   render() {
-    const { placement, children } = this.props;
+    const { placement } = this.props;
     const { showCallout } = this.state;
 
     return (
