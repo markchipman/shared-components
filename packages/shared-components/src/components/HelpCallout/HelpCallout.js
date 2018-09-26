@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Manager, Reference, Popper } from 'react-popper';
-import P from 'components/P';
 import HelpIcon from './styles/HelpIcon';
 import Container from './styles/HelpCalloutContainer';
 
