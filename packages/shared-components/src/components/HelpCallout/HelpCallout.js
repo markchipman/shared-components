@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Manager, Reference, Popper } from 'react-popper';
+import { mapProps } from 'recompose';
+import Anchor from 'components/Anchor';
 import HelpIcon from './styles/HelpIcon';
 import Container from './styles/HelpCalloutContainer';
 
@@ -56,9 +58,8 @@ class HelpCallout extends React.Component {
       onMouseOver={this.onMouseOver}
       onMouseLeave={this.onMouseLeave}
     >
-      { this.props.children }
       {
-        !this.props.withoutIcon && (
+        this.props.children || (
           <HelpIcon name="help" />
         )
       }
@@ -106,5 +107,10 @@ class HelpCallout extends React.Component {
     );
   }
 }
+
+HelpCallout.Link = mapProps(props => ({
+  ...props,
+  children: <Anchor type="text">{ props.children }<HelpIcon name="help" /></Anchor>,
+}))(HelpCallout);
 
 export default HelpCallout;
